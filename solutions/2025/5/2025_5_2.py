@@ -37,25 +37,20 @@ def solve():
     ranges = np.array(aoc.Input(ranges).lines().strip().split("-").to_int().get())
     ranges = ranges[ranges[:, 0].argsort()]
 
+    answer = 0
     for i in range(ranges.shape[0]-1):
         j = i+1
+        a,b = ranges[i]
+        c,d = ranges[j]
         # dont overlap
-        # do nothing
-        if not is_overlap(*ranges[i], *ranges[j]):
+        if not is_overlap(a,b,c,d):
+            answer += ranges[i][1] - ranges[i][0] + 1
             continue
 
         # overlap
-        # union -> ranges[j]
-        # [0,0] -> ranges[i]
-        union = [min(ranges[i,0], ranges[j,0]), max(ranges[i,1], ranges[j,1])]
-        ranges[i] = 0
-        ranges[j,0] = union[0]
-        ranges[j,1] = union[1]
-    ranges = ranges[~np.all(ranges == 0, axis=1)]
-
-    answer = 0
-    for _range in ranges:
-        answer += _range[1] - _range[0] + 1
+        ranges[j,0] = min(a, c)
+        ranges[j,1] = max(b, d)
+    answer += ranges[-1,1] - ranges[-1,0] + 1
 
     return answer
 
