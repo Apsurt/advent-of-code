@@ -6,7 +6,8 @@ YEAR, DAY, PART = (2025, 5, 2)
 
 def is_overlap(a,b,c,d) -> bool:
     # Architecture:
-    # A = [a,b] B = [c,d] (both closed)
+    # A = [a,b]
+    # B = [c,d]
     # Truth:
     # a <= b
     assert a <= b
@@ -18,8 +19,8 @@ def is_overlap(a,b,c,d) -> bool:
     # Consequences:
     # a <= c <=d
     assert a <= c and a <= d
-    # a <= b <= c <= d    disjoint ⇒ False
-    # a <= c <= b <= d    overlap ⇒ True
+    # a <= b <= c <= d    A ⋂ B = ∅ ⇒ False
+    # a <= c <= b <= d    A ⋂ B ≠ ∅ ⇒ True
     # a <= c <= d <= b    B ⊆ A ⇒ True
 
     # if d <= b:
